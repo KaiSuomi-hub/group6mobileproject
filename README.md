@@ -20,7 +20,6 @@ https://teams.microsoft.com/l/team/19%3AMEa9qBs906J5slZP0HFaoUiaKLua0Wd-zT8lnyh9
 Our OneDrive:
 https://unioulu-my.sharepoint.com/:f:/r/personal/asuomi20_students_oamk_fi/Documents/koulu/talvi2024/Mobiiliprojekti?csf=1&web=1&e=cYwF2k
 
-
 ### Contact us at
 
 group6@rusinapul.la
