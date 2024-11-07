@@ -2,6 +2,7 @@ import React, { useState, useLayoutEffect } from 'react';
 import { Text, View, Button, TextInput, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import homeStyles from './styles/HomeStyles';
 
 
 const BLUE = "#007AFF";
@@ -68,6 +69,21 @@ export default function Home() {
     const handleCreateSubmit = () => {
         navigation.navigate('Chat', { roomID: roomID });
     }
+    const JoinRoomButton = ({ onPress }) => {
+        return (
+            <TouchableOpacity style={homeStyles.joinButton} onPress={onPress}>
+                <Text style={homeStyles.joinButtonText}>Join Room</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    const CreateRoomButton = ({ onPress }) => {
+        return (
+            <TouchableOpacity style={homeStyles.createButton} onPress={onPress}>
+                <Text style={homeStyles.createButtonText}>Create Room</Text>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <View style={styles.container}>
@@ -84,22 +100,12 @@ export default function Home() {
                     style={[styles.textInput, { borderColor: bg }]}
                 />
             </View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    color='#007AFF'
-                    onPress={handleSubmit}
-                    title="Join Room"
-                />
-            </View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    color='#007AFF'
-                    onPress={handleCreateSubmit}
-                    title="Create Room"
-                />
+            <View style={homeStyles.space} />
+            <JoinRoomButton onPress={handleSubmit} />
+            <View style={homeStyles.spaceSmall} />
+            <CreateRoomButton onPress={handleCreateSubmit} />
                 <Text style={styles.textStyle}>Don't have a Room ID? Create One :)</Text>
             </View>
-        </View>
     )
 }
 
