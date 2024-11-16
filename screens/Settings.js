@@ -19,20 +19,8 @@ const SettingsScreen = () => {
 
 const SettingsHeader = () => {
     return (
-        <View style={settingStyles.headerContainer}>
-            <TouchableOpacity style={settingStyles.iconButton}>
-                <Image 
-                    source={{ uri: 'https://placeholder.pics/svg/24x24' }}
-                    style={settingStyles.icon}
-                />
-            </TouchableOpacity>
+        <View style={settingStyles.headerContainer}>   
             <Text style={settingStyles.title}>Settings</Text>
-            <TouchableOpacity style={settingStyles.iconButton}>
-                <Image 
-                    source={{ uri: 'https://placeholder.pics/svg/24x24' }}
-                    style={settingStyles.icon}
-                />
-            </TouchableOpacity>
         </View>
     );
 };

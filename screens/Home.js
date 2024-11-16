@@ -1,8 +1,8 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { Text, View, Button, TextInput, StyleSheet } from 'react-native';
+import { Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import homeStyles from './styles/HomeStyles';
+import homeStyles from '../styles/HomeStyles';
 
 
 const BLUE = "#007AFF";

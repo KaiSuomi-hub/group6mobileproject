@@ -72,6 +72,19 @@ const chatStyles = StyleSheet.create({
         fontSize: 16,
         color: '#49454f',
     },
+    sendButton: {
+        backgroundColor: '#65558F', // Color for the "Send" button
+        borderRadius: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    sendButtonText: {
+        color: '#ffffff', // White text for the button
+        fontSize: 16,
+        fontWeight: '500',
+    },
 });
 
 export default chatStyles;
