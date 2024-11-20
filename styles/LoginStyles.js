@@ -27,7 +27,7 @@ const textFieldStyles = StyleSheet.create({
         width: '100%',
     },
     input: {
-        flex: 1,
+        width: '100%',
         height: 40,
         fontFamily: 'Roboto',
         fontWeight: '400',
@@ -36,6 +36,7 @@ const textFieldStyles = StyleSheet.create({
         lineHeight: 24,
         color: '#1d1b20ff',
         paddingVertical: 4,
+        paddingLeft: 10,
     },
     trailingIconContainer: {
         width: 48,
@@ -87,38 +88,5 @@ const appStyles = StyleSheet.create({
         alignItems: 'center',
     }
 });
-const appBarStyles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        backgroundColor: '#fef7ff',
-        width: '100%',
-        height: 48,
-    },
-    title: {
-        fontSize: 22,
-        fontFamily: 'Roboto',
-        fontWeight: '400',
-        color: '#1d1b20',
-        textAlign: 'center',
-        lineHeight: 28,
-        flex: 1,
-    },
-    iconContainer: {
-        width: 48,
-        height: 48,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#65558f',
-        borderRadius: 24,
-    },
-    icon: {
-        width: 24,
-        height: 24,
-    }
-});
 
-export { appStyles, buttonStyles, textFieldStyles, appBarStyles };
+export { appStyles, buttonStyles, textFieldStyles };
