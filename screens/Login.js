@@ -86,7 +86,7 @@ const LoginScreen = () => {
       <LoginButton onPress={handleLogin} />
       <LoginAsGuestButton onPress={handleLoginAsGuest} />
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text style={{ color: '#007AFF', textAlign: 'center' }}>Don't have an account? Register here</Text>
+        <Text style={{ color: '#007AFF', textAlign: 'center' }}>Don't have an account? Register here!</Text>
       </TouchableOpacity>
     </View>
   );
