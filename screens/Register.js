@@ -1,75 +1,108 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, Alert } from 'react-native';
-import registerStyles from '../styles/RegisterStyles';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '../config';
+import { textFieldStyles, buttonStyles, appStyles } from '../styles/RegisterStyles';
 
-const TextField = ({ label, value, onChangeText, secureTextEntry }) => {
+const TextField = ({ label, value, onChangeText, secureTextEntry, errorMessage }) => {
   return (
-    <View style={registerStyles.textFieldContainer}>
-      <View style={registerStyles.textFieldStateLayer}>
-        <View style={registerStyles.textFieldContent}>
-          <View style={registerStyles.labelTextContainer}>
-            <Text style={registerStyles.labelText}>{label}</Text>
-          </View>
-          <View style={registerStyles.inputTextContainer}>
-            <TextInput 
-              style={registerStyles.inputText}
-              secureTextEntry={secureTextEntry}
-              value={value}
-              onChangeText={onChangeText} // Capture text input
-              placeholder={`Enter ${label}`} // Set placeholder dynamically
-            />
-          </View>
-        </View>
-        <View style={registerStyles.trailingIcon}>
-          <View style={registerStyles.iconContainer}>
-            <View style={registerStyles.stateLayerIcon}></View>
-          </View>
-        </View>
-      </View>
+    <View style={textFieldStyles.container}>
+      <Text style={textFieldStyles.label}>{label}</Text>
+      <TextInput
+        style={textFieldStyles.input}
+        secureTextEntry={secureTextEntry}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={`Enter ${label}`}
+      />
+      {}
+      {errorMessage ? <Text style={textFieldStyles.errorText}>{errorMessage}</Text> : null}
     </View>
-  );
-};
-
-const RegisterButton = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={registerStyles.registerButton} onPress={onPress}>
-      <Text style={registerStyles.registerButtonText}>Register</Text>
-    </TouchableOpacity>
   );
 };
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
 
-  // State variables for form inputs
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-  // Handle registration logic
-  const handleRegister = () => {
-    // Simple validation
-    if (!username || !password || !confirmPassword) {
-      Alert.alert('Error', 'All fields are required!');
-      return;
+  const handleRegister = async () => {
+    let valid = true;
+
+    setUsernameError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
+
+    if (!username) {
+      setUsernameError('Username is required');
+      valid = false;
+    }
+    if (!password) {
+      setPasswordError('Password is required');
+      valid = false;
     }
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match!');
+      setConfirmPasswordError('Passwords do not match');
+      valid = false;
+    }
+
+    if (!valid) {
       return;
     }
 
-    // Registration success
-    Alert.alert('Success', 'Registration successful!');
-    navigation.navigate('Login'); // Navigate to Login screen after registration
+    const url = `${API_URL}/api/register`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        Alert.alert('Success', 'Registration successful!');
+        navigation.navigate('Login');
+      } else {
+        Alert.alert('Error', data.error || 'Registration failed!');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to connect to the server!');
+    }
   };
 
   return (
-    <View style={registerStyles.screenContainer}>
-      <TextField label="Username" value={username} onChangeText={setUsername} secureTextEntry={false} />
-      <TextField label="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
-      <TextField label="Confirm Password" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry={true} />
-      <RegisterButton onPress={handleRegister} />
+    <View style={appStyles.container}>
+      <TextField
+        label="Username"
+        value={username}
+        onChangeText={setUsername}
+        errorMessage={usernameError}
+      />
+      <TextField
+        label="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry={true}
+        errorMessage={passwordError}
+      />
+      <TextField
+        label="Confirm Password"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry={true}
+        errorMessage={confirmPasswordError}
+      />
+      <TouchableOpacity style={buttonStyles.button} onPress={handleRegister}>
+        <Text style={buttonStyles.text}>Register</Text>
+      </TouchableOpacity>
     </View>
   );
 };

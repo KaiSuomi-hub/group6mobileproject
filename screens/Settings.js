@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import settingStyles from '../styles/SettingsStyles';
+import { View, Text, Switch, TouchableOpacity, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import settingStyles from '../styles/SettingsStyles';
 
 const SettingsScreen = () => {
   return (
@@ -18,11 +19,11 @@ const SettingsScreen = () => {
 };
 
 const SettingsHeader = () => {
-    return (
-        <View style={settingStyles.headerContainer}>   
-            <Text style={settingStyles.title}>Settings</Text>
-        </View>
-    );
+  return (
+    <View style={settingStyles.headerContainer}>   
+      <Text style={settingStyles.title}>Settings</Text>
+    </View>
+  );
 };
 
 const SettingItem = ({ label }) => {
@@ -46,13 +47,41 @@ const SettingItem = ({ label }) => {
 };
 
 const LogoutButton = () => {
+  const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    try {
+      // Näytä vahvistusilmoitus ennen uloskirjautumista
+      Alert.alert(
+        "Logout",
+        "Are you sure you want to log out?",
+        [
+          { text: "Cancel", style: "cancel" },
+          { 
+            text: "Logout", 
+            onPress: async () => {
+              // Poistetaan kaikki tallennetut tiedot AsyncStoragesta
+              await AsyncStorage.clear();
+
+              // Palataan kirjautumissivulle
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "Login" }],
+              });
+            } 
+          }
+        ]
+      );
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
   return (
-    <TouchableOpacity style={settingStyles.logoutButton} onPress={() => console.log('Logged out')}>
+    <TouchableOpacity style={settingStyles.logoutButton} onPress={handleLogout}>
       <Text style={settingStyles.logoutText}>Logout</Text>
     </TouchableOpacity>
   );
 };
-
-
 
 export default SettingsScreen;

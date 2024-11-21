@@ -1,53 +1,95 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import React, { useState } from 'react';
+import { View, TextInput, Text, TouchableOpacity, Alert } from 'react-native';
 import { textFieldStyles, buttonStyles, appStyles } from '../styles/LoginStyles';
+import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '../config';
 
-const TextFieldComponent = ({ label, placeholder, secureTextEntry }) => {
-    return (
-        <View style={textFieldStyles.container}>
-            <View style={textFieldStyles.labelTextContainer}>
-                <Text style={textFieldStyles.label}>{label}</Text>
-            </View>
-            <View style={textFieldStyles.inputContainer}>
-                <TextInput 
-                    style={textFieldStyles.input} 
-                    secureTextEntry={secureTextEntry}
-                    placeholder={placeholder}
-                    placeholderTextColor='#1d1b20ff'
-                    accessibilityLabel={label}
-                />
-                <View style={textFieldStyles.trailingIconContainer}>
-                </View>
-            </View>
-        </View>
-    );
+const TextField = ({ label, value, onChangeText, secureTextEntry }) => {
+  return (
+    <View style={textFieldStyles.container}>
+      <Text style={textFieldStyles.label}>{label}</Text>
+      <TextInput
+        style={textFieldStyles.input}
+        secureTextEntry={secureTextEntry}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={`Enter ${label}`}
+      />
+    </View>
+  );
 };
 
-const ButtonComponent = ({ title, onPress }) => {
-    return (
-        <TouchableOpacity style={buttonStyles.button} onPress={onPress} accessibilityLabel={title}>
-            <Text style={buttonStyles.text}>{title}</Text>
-        </TouchableOpacity>
-    );
+const LoginButton = ({ onPress }) => {
+  return (
+    <TouchableOpacity style={buttonStyles.button} onPress={onPress}>
+      <Text style={buttonStyles.text}>Login</Text>
+    </TouchableOpacity>
+  );
 };
 
-
+const LoginAsGuestButton = ({ onPress }) => {
+  return (
+    <TouchableOpacity style={buttonStyles.button} onPress={onPress}>
+      <Text style={buttonStyles.text}>Login as Guest</Text>
+    </TouchableOpacity>
+  );
+};
 
 const LoginScreen = () => {
-    const navigation = useNavigation(); // Use navigation hook
+  const navigation = useNavigation();
 
-    return (
-        <View style={appStyles.container}>
-            <View style={appStyles.formContainer}>
-                <TextFieldComponent label="Username" placeholder="Testi" secureTextEntry={false} />
-                <TextFieldComponent label="Password" placeholder="********" secureTextEntry={true} />
-                <ButtonComponent title="Login" onPress={() => { navigation.navigate('Home'); console.log('Login pressed'); }} />
-                <ButtonComponent title="Login as a guest" onPress={() => { navigation.navigate('Home'); console.log('Login as a guest pressed'); }} />
-                <ButtonComponent title="Register" onPress={() => { navigation.navigate('Register'); console.log('Register pressed'); }} />
-            </View>
-        </View>
-    );
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [err, setErr] = useState('');
+
+  const handleLogin = async () => {
+    if (!username || !password) {
+      setErr('Username and password are required!');
+      return;
+    }
+
+    const url = `${API_URL}/api/login`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setErr('');
+        navigation.navigate('Home');
+      } else {
+        setErr(data.error || 'Login failed!');
+      }
+    } catch (error) {
+      setErr('Failed to connect to the server.');
+    }
+  };
+
+  const handleLoginAsGuest = () => {
+    navigation.navigate('Home');
+  };
+
+  return (
+    <View style={appStyles.container}>
+      <TextField label="Username" value={username} onChangeText={setUsername} secureTextEntry={false} />
+      <TextField label="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
+      
+      {err ? <Text style={{ color: 'red', marginBottom: 10 }}>{err}</Text> : null}
+
+      <LoginButton onPress={handleLogin} />
+      <LoginAsGuestButton onPress={handleLoginAsGuest} />
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={{ color: '#007AFF', textAlign: 'center' }}>Don't have an account? Register here!</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default LoginScreen;
