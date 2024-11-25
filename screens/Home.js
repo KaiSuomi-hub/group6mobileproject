@@ -1,9 +1,9 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { Text, View, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import homeStyles from '../styles/HomeStyles';
-
+import createStyles from '../styles/HomeStyles';
+import { useTheme } from '../context/ThemeContext';
 
 const BLUE = "#007AFF";
 const BLACK = "#000000";
@@ -11,6 +11,8 @@ const LENGTH = 6;
 
 export default function Home() {
     const navigation = useNavigation();
+    const { theme } = useTheme();
+    const styles = createStyles();
     const [roomID, setRoomId] = useState('');
     const [bg, setBg] = useState('#000'); // for changing the border color of text input
     const [err, setErr] = useState('');
@@ -18,10 +20,10 @@ export default function Home() {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {
-                backgroundColor: '#fff',
+                backgroundColor: theme.backgroundColor,
                 height: 75,
             },
-            headerTintColor: '#000',
+            headerTintColor: theme.textColor,
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
@@ -30,21 +32,20 @@ export default function Home() {
                     style={{ marginLeft: 15 }}
                     name="menufold"
                     size={28}
-                    color="#000"
+                    color={theme.textColor}
                     onPress={() => navigation.openDrawer()}
                 />
             ),
-        })
-    })
+        });
+    }, [navigation, theme]);
 
-    // navigation.openDrawer();
     const onFocus = () => {
         setBg(BLUE);
-    }
+    };
 
     const onBlur = () => {
         setBg(BLACK);
-    }
+    };
 
     const generateID = () => {
         var result = '';
@@ -54,33 +55,33 @@ export default function Home() {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return result;
-    }
+    };
 
     const handleSubmit = () => {
         if (roomID !== '') {
             navigation.navigate('Chat', { roomID: roomID });
-        }
-        else {
-            setErr("Room ID cannot be empty!")
+        } else {
+            setErr("Room ID cannot be empty!");
             setBg('#ff0000');
         }
-    }
+    };
 
     const handleCreateSubmit = () => {
-        navigation.navigate('Chat', { roomID: roomID });
-    }
+        navigation.navigate('Chat', { roomID: generateID() });
+    };
+
     const JoinRoomButton = ({ onPress }) => {
         return (
-            <TouchableOpacity style={homeStyles.joinButton} onPress={onPress}>
-                <Text style={homeStyles.joinButtonText}>Join Room</Text>
+            <TouchableOpacity style={styles.joinButton} onPress={onPress}>
+                <Text style={styles.joinButtonText}>Join Room</Text>
             </TouchableOpacity>
         );
     };
 
     const CreateRoomButton = ({ onPress }) => {
         return (
-            <TouchableOpacity style={homeStyles.createButton} onPress={onPress}>
-                <Text style={homeStyles.createButtonText}>Create Room</Text>
+            <TouchableOpacity style={styles.createButton} onPress={onPress}>
+                <Text style={styles.createButtonText}>Create Room</Text>
             </TouchableOpacity>
         );
     };
@@ -100,13 +101,13 @@ export default function Home() {
                     style={[styles.textInput, { borderColor: bg }]}
                 />
             </View>
-            <View style={homeStyles.space} />
+            <View style={styles.space} />
             <JoinRoomButton onPress={handleSubmit} />
-            <View style={homeStyles.spaceSmall} />
+            <View style={styles.spaceSmall} />
             <CreateRoomButton onPress={handleCreateSubmit} />
-                <Text style={styles.textStyle}>Don't have a Room ID? Create One :)</Text>
-            </View>
-    )
+            <Text style={styles.textStyle}>Don't have a Room ID? Create One :)</Text>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({

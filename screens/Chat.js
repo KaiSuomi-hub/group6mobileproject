@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import chatStyles from '../styles/ChatStyles';
+import createStyles from '../styles/ChatStyles';
+import { useTheme } from '../context/ThemeContext';
 import { evaluate } from 'mathjs';
 
 const ChatScreen = () => {
     // State to manage the input message and message history
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+    const { theme } = useTheme();
+    const styles = createStyles(theme);
 
     // Function to handle the "/roll" command
     const handleRollCommand = () => {
@@ -71,19 +74,19 @@ const ChatScreen = () => {
     };
 
     return (
-        <SafeAreaView style={chatStyles.container}>
+        <SafeAreaView style={styles.container}>
             {/* Header */}
-            <View style={chatStyles.header}>
-                <Text style={chatStyles.title}>Chat</Text>
+            <View style={styles.header}>
+                <Text style={styles.title}>Chat</Text>
             </View>
 
             {/* Messages Container */}
-            <ScrollView contentContainerStyle={chatStyles.messagesContainer}>
+            <ScrollView contentContainerStyle={styles.messagesContainer}>
                 {messages.map((msg, index) => (
                     <View 
                         key={index} 
-                        style={[chatStyles.messageBubble, msg.sentByUser ? chatStyles.sentMessage : chatStyles.receivedMessage]}>
-                        <Text style={msg.sentByUser ? chatStyles.sentMessageText : chatStyles.receivedMessageText}>
+                        style={[styles.messageBubble, msg.sentByUser ? styles.sentMessage : styles.receivedMessage]}>
+                        <Text style={msg.sentByUser ? styles.sentMessageText : styles.receivedMessageText}>
                             {msg.text}
                         </Text>
                     </View>
@@ -91,20 +94,19 @@ const ChatScreen = () => {
             </ScrollView>
 
             {/* Input Area */}
-            <View style={chatStyles.inputContainer}>
+            <View style={styles.inputContainer}>
                 <TextInput 
-                    style={chatStyles.input}
+                    style={styles.input}
                     placeholder="Type a message..."
                     placeholderTextColor="#49454f"
                     value={message}
                     onChangeText={text => setMessage(text)}
                 />
                 <TouchableOpacity 
-                    style={chatStyles.sendButton} 
+                    style={styles.sendButton} 
                     onPress={handleSendMessage} // Handle sending the message
                 >
-                    {/* Wrap the string in a Text component */}
-                    <Text style={chatStyles.sendButtonText}>Send</Text>
+                    <Text style={styles.sendButtonText}>Send</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
