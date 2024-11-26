@@ -85,6 +85,14 @@ const createStyles = () => {
             marginTop: 32,
             backgroundColor: theme.primaryColor,
         },
+        themeButton: {
+            borderRadius: 100,
+            width: '100%',
+            height: 66,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginVertical: 10,
+        },
         input: {
             height: 40,
             borderColor: theme.primaryColor,
@@ -120,6 +128,7 @@ const createStyles = () => {
             margin: 20,
             backgroundColor: 'white',
             borderRadius: 20,
+            padding: 35,
             shadowColor: '#000',
             shadowOffset: {
                 width: 0,

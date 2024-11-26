@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 
-const createStyles = () => {
-    const { theme } = useTheme();
+const createStyles = (theme) => {
     return StyleSheet.create({
         container: {
             width: '100%',

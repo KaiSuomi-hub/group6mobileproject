@@ -5,6 +5,21 @@ import { useNavigation } from '@react-navigation/native';
 import createStyles from '../styles/SettingsStyles';
 import { useTheme } from '../context/ThemeContext';
 
+const defaultTheme = {
+  primaryColor: '#65558F',
+  backgroundColor: '#FFFFFF',
+  textColor: '#1D1B20',
+  inputBackgroundColor: '#e6e0e9',
+  inputTextColor: '#1d1b20',
+  labelColor: '#49454f',
+  buttonTextColor: '#FFFFFF',
+  iconBackgroundColor: '#FFFFFF',
+  receivedMessageBackgroundColor: '#625b71',
+  sentMessageBackgroundColor: '#ece6f0',
+  receivedMessageTextColor: '#FFFFFF',
+  sentMessageTextColor: '#49454f',
+};
+
 const SettingsScreen = () => {
   const { theme, changeTheme } = useTheme();
   const styles = createStyles();
@@ -33,6 +48,10 @@ const SettingsScreen = () => {
     }
   };
 
+  const applyTheme = (themeColors) => {
+    changeTheme(themeColors);
+  };
+
   return (
     <ScrollView style={styles.screenContainer} contentContainerStyle={[styles.contentContainer, { paddingBottom: 20 }]}>
       <SettingsHeader />
@@ -43,8 +62,59 @@ const SettingsScreen = () => {
       <View style={styles.separator} />
       <View style={styles.separator} />
       <Text style={styles.settingText}>Change Theme Colors:</Text>
+      <TouchableOpacity style={[styles.themeButton, { backgroundColor: '#65558F' }]} onPress={() => applyTheme(defaultTheme)}>
+        <Text style={styles.buttonText}>Default Theme</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.themeButton, { backgroundColor: '#1E90FF' }]} onPress={() => applyTheme({
+        primaryColor: '#1E90FF',
+        backgroundColor: '#F0F8FF',
+        textColor: '#000080',
+        inputBackgroundColor: '#E6E6FA',
+        inputTextColor: '#000080',
+        labelColor: '#4682B4',
+        buttonTextColor: '#FFFFFF',
+        iconBackgroundColor: '#B0C4DE',
+        receivedMessageBackgroundColor: '#ADD8E6',
+        sentMessageBackgroundColor: '#B0E0E6',
+        receivedMessageTextColor: '#000080',
+        sentMessageTextColor: '#000080',
+      })}>
+        <Text style={styles.buttonText}>Blue Theme</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.themeButton, { backgroundColor: '#FF6347' }]} onPress={() => applyTheme({
+        primaryColor: '#FF6347',
+        backgroundColor: '#FFF5EE',
+        textColor: '#8B0000',
+        inputBackgroundColor: '#FFE4E1',
+        inputTextColor: '#8B0000',
+        labelColor: '#CD5C5C',
+        buttonTextColor: '#FFFFFF',
+        iconBackgroundColor: '#FA8072',
+        receivedMessageBackgroundColor: '#FFA07A',
+        sentMessageBackgroundColor: '#FF7F50',
+        receivedMessageTextColor: '#8B0000',
+        sentMessageTextColor: '#8B0000',
+      })}>
+        <Text style={styles.buttonText}>Red Theme</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.themeButton, { backgroundColor: '#32CD32' }]} onPress={() => applyTheme({
+        primaryColor: '#32CD32',
+        backgroundColor: '#F5FFFA',
+        textColor: '#006400',
+        inputBackgroundColor: '#F0FFF0',
+        inputTextColor: '#006400',
+        labelColor: '#228B22',
+        buttonTextColor: '#FFFFFF',
+        iconBackgroundColor: '#98FB98',
+        receivedMessageBackgroundColor: '#90EE90',
+        sentMessageBackgroundColor: '#8FBC8F',
+        receivedMessageTextColor: '#006400',
+        sentMessageTextColor: '#006400',
+      })}>
+        <Text style={styles.buttonText}>Green Theme</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.customizeButton} onPress={() => setModalVisible(true)}>
-        <Text style={styles.buttonText}>Customize Colors</Text>
+        <Text style={styles.buttonText}>Custom Theme</Text>
       </TouchableOpacity>
       <Modal
         animationType="slide"
