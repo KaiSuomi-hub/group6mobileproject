@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 
-const createStyles = () => {
-    const { theme } = useTheme();
+const createStyles = (theme) => {
     return StyleSheet.create({
         container: {
             flex: 1,
@@ -127,7 +126,36 @@ const createStyles = () => {
         },
         spaceSmall: {
             height: 16,
-        }
+        },
+        roomListContainer: {
+            width: '100%',
+            marginTop: 20,
+        },
+        roomItem: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 10,
+            borderBottomWidth: 1,
+            borderBottomColor: '#ccc',
+        },
+        roomText: {
+            fontSize: 16,
+            color: theme.textColor,
+        },
+        joinButton2: {
+            backgroundColor: theme.primaryColor,
+            borderRadius: 5,
+            padding: 10,
+        },
+        joinButtonText2: {
+            color: theme.buttonTextColor,
+            fontSize: 14,
+        },
+        errorStyle: {
+            color: 'red',
+            marginBottom: 10,
+        },
     });
 };
 

@@ -2,8 +2,9 @@ import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { Text, View, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import homeStyles from '../styles/HomeStyles';
 import { API_URL } from '../config';
+import { useTheme } from '../context/ThemeContext';
+import createStyles from '../styles/HomeStyles';
 
 const BLUE = '#007AFF';
 const BLACK = '#000000';
@@ -11,6 +12,8 @@ const LENGTH = 6;
 
 export default function Home() {
   const navigation = useNavigation();
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [roomID, setRoomId] = useState('');
   const [bg, setBg] = useState(BLACK);
   const [err, setErr] = useState('');
@@ -42,20 +45,20 @@ export default function Home() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerStyle: { backgroundColor: '#fff', height: 75 },
-      headerTintColor: '#000',
+      headerStyle: { backgroundColor: theme.backgroundColor, height: 75 },
+      headerTintColor: theme.textColor,
       headerTitleStyle: { fontWeight: 'bold' },
       headerLeft: () => (
         <Icon
           style={{ marginLeft: 15 }}
           name="menufold"
           size={28}
-          color="#000"
+          color={theme.textColor}
           onPress={() => navigation.openDrawer()}
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, theme]);
 
   const onFocus = () => setBg(BLUE);
   const onBlur = () => setBg(BLACK);
@@ -104,21 +107,21 @@ export default function Home() {
   };
 
   const renderRoomItem = ({ item }) => (
-    <View style={homeStyles.roomItem}>
-      <Text style={homeStyles.roomText}>Room ID: {item}</Text>
+    <View style={styles.roomItem}>
+      <Text style={styles.roomText}>Room ID: {item}</Text>
       <TouchableOpacity
-        style={homeStyles.joinButton2}
+        style={styles.joinButton2}
         onPress={() => navigation.navigate('Chat', { roomID: item })}
       >
-        <Text style={homeStyles.joinButtonText2}>Join</Text>
+        <Text style={styles.joinButtonText2}>Join</Text>
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={homeStyles.container}>
-      <Text style={homeStyles.appBarHeadline}>P2P WEBRTC</Text>
-      {err ? <Text style={homeStyles.errorStyle}>{err}</Text> : null}
+    <View style={styles.container}>
+      <Text style={styles.appBarHeadline}>P2P WEBRTC</Text>
+      {err ? <Text style={styles.errorStyle}>{err}</Text> : null}
       <TextInput
         placeholder="Room ID"
         selectionColor="#DDD"
@@ -126,18 +129,18 @@ export default function Home() {
         onChangeText={setRoomId}
         onFocus={onFocus}
         onBlur={onBlur}
-        style={[homeStyles.textFieldInput, { borderColor: bg }]}
+        style={[styles.textFieldInput, { borderColor: bg }]}
       />
-      <View style={homeStyles.space} />
-      <TouchableOpacity style={homeStyles.joinButton} onPress={handleSubmit}>
-        <Text style={homeStyles.joinButtonText}>Join Room</Text>
+      <View style={styles.space} />
+      <TouchableOpacity style={styles.joinButton} onPress={handleSubmit}>
+        <Text style={styles.joinButtonText}>Join Room</Text>
       </TouchableOpacity>
-      <View style={homeStyles.spaceSmall} />
-      <TouchableOpacity style={homeStyles.createButton} onPress={handleCreateSubmit}>
-        <Text style={homeStyles.createButtonText}>Create Room</Text>
+      <View style={styles.spaceSmall} />
+      <TouchableOpacity style={styles.createButton} onPress={handleCreateSubmit}>
+        <Text style={styles.createButtonText}>Create Room</Text>
       </TouchableOpacity>
-      <View style={homeStyles.roomListContainer}>
-        <Text style={homeStyles.roomText}>Public Rooms:</Text>
+      <View style={styles.roomListContainer}>
+        <Text style={styles.roomText}>Public Rooms:</Text>
         {loading ? (
           <ActivityIndicator size="large" color={BLUE} />
         ) : joinedRooms.length > 0 ? (
