@@ -58,8 +58,6 @@ const SettingsScreen = () => {
       <View style={styles.separator} />
       <SettingItem label="Notifications" />
       <View style={styles.separator} />
-      <SettingItem label="joku juttu" />
-      <View style={styles.separator} />
       <View style={styles.separator} />
       <Text style={styles.settingText}>Change Theme Colors:</Text>
       <TouchableOpacity style={[styles.themeButton, { backgroundColor: '#65558F' }]} onPress={() => applyTheme(defaultTheme)}>

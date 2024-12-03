@@ -101,11 +101,11 @@ const createStyles = () => {
             paddingHorizontal: 10,
             borderRadius: 5,
             color: theme.inputTextColor,
-            width: '90%', // Adjusted width to fit within modal
+            width: '90%',
         },
         button: {
             borderRadius: 100,
-            width: '90%', // Adjusted width to fit within modal
+            width: '90%',
             height: 50,
             justifyContent: 'center',
             alignItems: 'center',
