@@ -1,90 +1,99 @@
 import { StyleSheet } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
 
-const chatStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 8,
-        paddingHorizontal: 4,
-        backgroundColor: '#fef7ff',
-    },
-    backButton: {
-        width: 40,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    settingsButton: {
-        width: 40,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    icon: {
-        width: 24,
-        height: 24,
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: '400',
-        color: '#1d1b20',
-    },
-    messagesContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        padding: 10,
-    },
-    messageBubble: {
-        maxWidth: '75%',
-        borderRadius: 20,
-        padding: 16,
-        marginVertical: 5,
-    },
-    receivedMessage: {
-        backgroundColor: '#625b71',
-        alignSelf: 'flex-start',
-    },
-    sentMessage: {
-        backgroundColor: '#ece6f0',
-        alignSelf: 'flex-end',
-    },
-    receivedMessageText: {
-        color: '#ffffff',
-        fontSize: 16,
-        lineHeight: 24,
-    },
-    sentMessageText: {
-        color: '#49454f',
-        fontSize: 16,
-        lineHeight: 24,
-    },
-    input: {
-        height: 56,
-        borderRadius: 28,
-        backgroundColor: '#ece6f0',
-        paddingHorizontal: 16,
-        margin: 10,
-        fontSize: 16,
-        color: '#49454f',
-    },
-    sendButton: {
-        backgroundColor: '#65558F', // Color for the "Send" button
-        borderRadius: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    sendButtonText: {
-        color: '#ffffff', // White text for the button
-        fontSize: 16,
-        fontWeight: '500',
-    },
-});
+const createStyles = (theme) => {
+    return StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: theme.backgroundColor,
+        },
+        header: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingVertical: 8,
+            paddingHorizontal: 4,
+            backgroundColor: theme.primaryColor,
+        },
+        backButton: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        settingsButton: {
+            width: 40,
+            height: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        icon: {
+            width: 24,
+            height: 24,
+        },
+        title: {
+            fontSize: 22,
+            fontWeight: '400',
+            color: theme.textColor,
+        },
+        messagesContainer: {
+            flexGrow: 1,
+            justifyContent: 'flex-end',
+            padding: 10,
+        },
+        messageBubble: {
+            maxWidth: '75%',
+            borderRadius: 20,
+            padding: 16,
+            marginVertical: 5,
+        },
+        receivedMessage: {
+            backgroundColor: theme.receivedMessageBackgroundColor,
+            alignSelf: 'flex-start',
+        },
+        sentMessage: {
+            backgroundColor: theme.sentMessageBackgroundColor,
+            alignSelf: 'flex-end',
+        },
+        receivedMessageText: {
+            color: theme.receivedMessageTextColor,
+            fontSize: 16,
+            lineHeight: 24,
+        },
+        sentMessageText: {
+            color: theme.sentMessageTextColor,
+            fontSize: 16,
+            lineHeight: 24,
+        },
+        inputContainer: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 10,
+        },
+        input: {
+            flex: 1,
+            height: 56,
+            borderRadius: 28,
+            backgroundColor: theme.inputBackgroundColor,
+            paddingHorizontal: 16,
+            margin: 10,
+            fontSize: 16,
+            color: theme.inputTextColor,
+        },
+        sendButton: {
+            backgroundColor: theme.primaryColor,
+            borderRadius: 20,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        sendButtonText: {
+            color: theme.buttonTextColor,
+            fontSize: 16,
+            fontWeight: '500',
+        },
+    });
+};
 
-export default chatStyles;
+export default createStyles;
