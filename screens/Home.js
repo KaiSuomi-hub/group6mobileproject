@@ -108,15 +108,15 @@ export default function Home() {
 
   const renderRoomItem = ({ item }) => (
     <View style={styles.roomItem}>
-      <Text style={styles.roomText}>Room ID: {item}</Text>
-      <TouchableOpacity
-        style={styles.joinButton2}
-        onPress={() => navigation.navigate('Chat', { roomID: item })}
-      >
-        <Text style={styles.joinButtonText2}>Join</Text>
-      </TouchableOpacity>
+        <Text style={styles.roomText}>Room ID: {item.roomID}</Text>
+        <TouchableOpacity
+            style={styles.joinButton2}
+            onPress={() => navigation.navigate('Chat', { roomID: item.roomID })}
+        >
+            <Text style={styles.joinButtonText2}>Join</Text>
+        </TouchableOpacity>
     </View>
-  );
+);
 
   return (
     <View style={styles.container}>
