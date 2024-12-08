@@ -93,6 +93,28 @@ const createStyles = (theme) => {
             fontSize: 16,
             fontWeight: '500',
         },
+        receivedMessageText: {
+            color: '#fff',  // White text for better contrast on dark background
+            fontSize: 16,
+          },
+          sentMessageText: {
+            color: '#333',  // Dark text for sent messages
+            fontSize: 16,
+          },
+        sentMessageContainer: {
+            alignSelf: 'flex-start',
+            backgroundColor: '#e1ffc7',  // Light green for sent messages
+          },
+          receivedMessageContainer: {
+            alignSelf: 'flex-end',
+            backgroundColor: '#3b5998',  // Light blue for received messages
+          },
+          userIdText: {
+            fontSize: 12,
+            color: theme.textColorSecondary || '#999',  // Lighter color for user ID
+            marginTop: 4,
+            textAlign: 'right', // Align to the right for received messages
+          },
     });
 };
 
