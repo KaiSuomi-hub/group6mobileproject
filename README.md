@@ -5,7 +5,7 @@ P2P-webrtc chat with local and network encryption.
 Node.js server
 https://github.com/KaiSuomi-hub/group6nodeserver
 
-listens at group6nodeserver.onrender.com:9000
+listens at group6nodeserver.onrender.com:443
 
 
 See the flowchart at:
