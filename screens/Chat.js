@@ -13,14 +13,16 @@ const ChatScreen = ({ route }) => {
   const socketRef = useRef();
   const { theme } = useTheme();
   const styles = createStyles(theme);
-  const { roomID } = route.params;
+  const { roomID, username } = route.params;
 
   useEffect(() => {
     // Initialize socket connection
+    console.log('[DEBUG] Received usernaem:', username);
     socketRef.current = io(API_URL); // Replace with your actual server URL
     socketRef.current.emit('join room', roomID);
 
     socketRef.current.on('user id', (userID) => {
+      
       console.log('[DEBUG] Received user ID:', userID);
     });
 
@@ -74,9 +76,10 @@ const handleCalcCommand = (expression) => {
     }
 };
 const handleSendMessage = () => {
+  console.log('mun username on: ', username);
     if (message.trim()) {
         const userId = socketRef.current.id;
-        socketRef.current.emit('message', { roomID, text: message, sender: userId });
+        socketRef.current.emit('message', { roomID, text: message, sender: username });
         
         const randomCommandMatch = message.trim().match(/^\/random (\d+) (\d+)$/);
         const calcCommandMatch = message.trim().match(/^\/calc (.+)$/);
@@ -119,7 +122,7 @@ const handleSendMessage = () => {
         {msg.text}
       </Text>
       <Text style={styles.userIdText}>
-        {msg.sender === 'You' ? 'You' : `User ${msg.userId}`}
+        {msg.sender === 'You' ? 'You' : `${msg.sender}`}
       </Text>
     </View>
   ))}

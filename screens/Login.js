@@ -67,7 +67,8 @@ const LoginScreen = () => {
 
       if (response.ok) {
         setErr('');
-        navigation.navigate('Home');
+
+        navigation.navigate('Home', { username });
       } else {
         setErr(data.error || 'Login failed!');
       }
@@ -77,7 +78,7 @@ const LoginScreen = () => {
   };
 
   const handleLoginAsGuest = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Home', { username: 'Guest' });
   };
 
   return (

@@ -10,7 +10,7 @@ const BLUE = '#007AFF';
 const BLACK = '#000000';
 const LENGTH = 6;
 
-export default function Home() {
+export default function Home({ route }) {
   const navigation = useNavigation();
   const { theme } = useTheme();
   const styles = createStyles(theme);
@@ -19,6 +19,9 @@ export default function Home() {
   const [err, setErr] = useState('');
   const [joinedRooms, setJoinedRooms] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { username } = route.params;
+  
+
 
   const fetchRooms = async () => {
     setLoading(true);
@@ -69,9 +72,11 @@ export default function Home() {
   };
 
   const handleSubmit = () => {
+    console.log('testi', username);
     if (roomID.trim() !== '') {
       setJoinedRooms([...joinedRooms, roomID]);
-      navigation.navigate('Chat', { roomID });
+      navigation.navigate('Chat', { roomID, username });
+      
     } else {
       setErr('Room ID cannot be empty!');
       setBg('#ff0000');
@@ -79,6 +84,8 @@ export default function Home() {
   };
 
   const handleCreateSubmit = async () => {
+    console.log('testi', username);
+
     setLoading(true);
     const newRoomID = generateID();
     setRoomId(newRoomID);
@@ -93,7 +100,7 @@ export default function Home() {
       const data = await response.json();
       if (response.ok) {
         setJoinedRooms([...joinedRooms, newRoomID]);
-        navigation.navigate('Chat', { roomID: newRoomID });
+        navigation.navigate('Chat', { roomID: newRoomID, username  });
       } else {
         console.error('Failed to create room:', data.error);
         setErr(data.error || 'Error creating room');
@@ -111,7 +118,7 @@ export default function Home() {
         <Text style={styles.roomText}>Room ID: {item.roomID}</Text>
         <TouchableOpacity
             style={styles.joinButton2}
-            onPress={() => navigation.navigate('Chat', { roomID: item.roomID })}
+            onPress={() => navigation.navigate('Chat', { roomID: item.roomID, username })}
         >
             <Text style={styles.joinButtonText2}>Join</Text>
         </TouchableOpacity>

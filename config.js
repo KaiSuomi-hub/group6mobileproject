@@ -3,4 +3,4 @@
 
 //Render
 //Laapotin super secret render servu :D export const API_URL = 'https://testi123.onrender.com';
-export const API_URL = 'group6nodeserver.onrender.com:9000';
+export const API_URL = 'https://group6nodeserver.onrender.com';
